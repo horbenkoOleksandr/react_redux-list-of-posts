@@ -7,14 +7,14 @@ import {
 } from '../../api/comments';
 
 type CommentsState = {
-  comments: Comment[];
-  isLoading: boolean;
+  items: Comment[];
+  loaded: boolean;
   hasError: boolean;
 };
 
 const initialState: CommentsState = {
-  comments: [],
-  isLoading: false,
+  items: [],
+  loaded: false,
   hasError: false,
 };
 
@@ -47,33 +47,33 @@ const commentsSlice = createSlice({
   initialState,
   reducers: {
     clearComments: state => {
-      state.comments = [];
+      state.items = [];
       state.hasError = false;
-      state.isLoading = false;
+      state.loaded = false;
     },
   },
   extraReducers: builder => {
     builder.addCase(loadCommentsByPost.pending, state => {
-      state.isLoading = true;
+      state.loaded = true;
       state.hasError = false;
     });
     builder.addCase(loadCommentsByPost.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.comments = action.payload;
+      state.loaded = false;
+      state.items = action.payload;
     });
     builder.addCase(loadCommentsByPost.rejected, state => {
-      state.isLoading = false;
+      state.loaded = false;
       state.hasError = true;
     });
     builder.addCase(addComment.fulfilled, (state, action) => {
-      state.comments.push(action.payload);
+      state.items.push(action.payload);
     });
     builder.addCase(addComment.rejected, state => {
       state.hasError = true;
     });
     builder.addCase(deleteComments.fulfilled, (state, action) => {
-      state.comments = state.comments.filter(
-        comment => comment.id !== action.payload,
+      state.items = state.items.filter(
+        item => item.id !== action.payload,
       );
     });
   },

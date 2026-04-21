@@ -6,7 +6,7 @@ import { setAuthor } from '../features/author';
 export const UserSelector = () => {
   const [expanded, setExpanded] = useState(false);
   const dispatch = useAppDispatch();
-  const users = useAppSelector(state => state.users.users);
+  const users = useAppSelector(state => state.users.items);
   const selectedUser = useAppSelector(state => state.author);
 
   useEffect(() => {
