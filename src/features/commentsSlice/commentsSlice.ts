@@ -33,8 +33,8 @@ export const addComment = createAsyncThunk(
   },
 );
 
-export const deleteComments = createAsyncThunk(
-  'comments/deleteComments',
+export const deleteComm = createAsyncThunk(
+  'comments/deleteComment',
   async (commentId: number) => {
     await deleteComment(commentId);
 
@@ -71,10 +71,8 @@ const commentsSlice = createSlice({
     builder.addCase(addComment.rejected, state => {
       state.hasError = true;
     });
-    builder.addCase(deleteComments.fulfilled, (state, action) => {
-      state.items = state.items.filter(
-        item => item.id !== action.payload,
-      );
+    builder.addCase(deleteComm.fulfilled, (state, action) => {
+      state.items = state.items.filter(item => item.id !== action.payload);
     });
   },
 });
