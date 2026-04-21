@@ -6,7 +6,7 @@ import { setSelectedPost } from '../features/selectedPost';
 export const PostsList = () => {
   const dispatch = useAppDispatch();
   const posts = useAppSelector(state => state.posts.items);
-  const selectedPostId = useAppSelector(state => state.selectedPost);
+  const selectedPost = useAppSelector(state => state.selectedPost);
 
   return (
     <div data-cy="PostsList">
@@ -31,17 +31,17 @@ export const PostsList = () => {
                   type="button"
                   data-cy="PostButton"
                   className={classNames('button', 'is-link', {
-                    'is-light': post.id !== selectedPostId?.id,
+                    'is-light': post.id !== selectedPost?.id,
                   })}
                   onClick={() => {
                     dispatch(
                       setSelectedPost(
-                        post.id === selectedPostId?.id ? null : post,
+                        post.id === selectedPost?.id ? null : post,
                       ),
                     );
                   }}
                 >
-                  {post.id === selectedPostId?.id ? 'Close' : 'Open'}
+                  {post.id === selectedPost?.id ? 'Close' : 'Open'}
                 </button>
               </td>
             </tr>

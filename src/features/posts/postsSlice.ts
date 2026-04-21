@@ -4,13 +4,13 @@ import { getUserPosts } from '../../api/posts';
 
 type PostState = {
   items: Post[];
-  isLoading: boolean;
+  loaded: boolean;
   hasError: boolean;
 };
 
 const initialState: PostState = {
   items: [],
-  isLoading: false,
+  loaded: false,
   hasError: false,
 };
 
@@ -25,21 +25,22 @@ const postSlice = createSlice({
   reducers: {
     clearPosts: state => {
       state.items = [];
-      state.isLoading = false;
+      state.loaded = false;
       state.hasError = false;
     },
   },
   extraReducers: builder => {
     builder.addCase(loadPostsByUser.pending, state => {
-      state.isLoading = true;
+      state.loaded = false;
       state.hasError = false;
     });
     builder.addCase(loadPostsByUser.fulfilled, (state, action) => {
-      state.isLoading = false;
+      state.loaded = true;
       state.items = action.payload;
+      state.hasError = false;
     });
     builder.addCase(loadPostsByUser.rejected, state => {
-      state.isLoading = false;
+      state.loaded = true;
       state.hasError = true;
     });
   },
