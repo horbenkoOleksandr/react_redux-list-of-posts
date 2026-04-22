@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
   addComment,
   deleteComm,
-  loadCommentsByPost,
+  // loadCommentsByPost,
 } from '../features/commentsSlice';
 
 type Props = {
@@ -17,14 +17,23 @@ type Props = {
 export const PostDetails: React.FC<Props> = ({ post }) => {
   const [visible, setVisible] = useState(false);
   const dispatch = useAppDispatch();
-  const comments = useAppSelector(state => state.comments.items);
-  const loaded = useAppSelector(state => state.comments.loaded);
-  const hasError = useAppSelector(state => state.comments.hasError);
+  // const comments = useAppSelector(state => state.comments.items);
+  // const loaded = useAppSelector(state => state.comments.loaded);
+  // const hasError = useAppSelector(state => state.comments.hasError);
+  const {
+    items: comments,
+    loaded,
+    hasError,
+  } = useAppSelector(state => state.comments);
+
+  // useEffect(() => {
+  //   setVisible(false);
+  //   dispatch(loadCommentsByPost(post.id));
+  // }, [post.id, dispatch]);
 
   useEffect(() => {
     setVisible(false);
-    dispatch(loadCommentsByPost(post.id));
-  }, [post.id, dispatch]);
+  }, [post.id]);
 
   const handleAddComment = async (data: CommentData) => {
     await dispatch(addComment({ data, postId: post.id }));

@@ -31,6 +31,7 @@ const postSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(loadPostsByUser.pending, state => {
+      state.items = [];
       state.loaded = false;
       state.hasError = false;
     });
@@ -42,6 +43,7 @@ const postSlice = createSlice({
     builder.addCase(loadPostsByUser.rejected, state => {
       state.loaded = true;
       state.hasError = true;
+      state.items = [];
     });
   },
 });

@@ -54,6 +54,7 @@ const commentsSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(loadCommentsByPost.pending, state => {
+      state.items = [];
       state.loaded = false;
       state.hasError = false;
     });
@@ -63,6 +64,7 @@ const commentsSlice = createSlice({
       state.hasError = false;
     });
     builder.addCase(loadCommentsByPost.rejected, state => {
+      state.items = [];
       state.loaded = true;
       state.hasError = true;
     });
@@ -74,6 +76,9 @@ const commentsSlice = createSlice({
     });
     builder.addCase(deleteComm.fulfilled, (state, action) => {
       state.items = state.items.filter(item => item.id !== action.payload);
+    });
+    builder.addCase(deleteComm.rejected, state => {
+      state.hasError = true;
     });
   },
 });

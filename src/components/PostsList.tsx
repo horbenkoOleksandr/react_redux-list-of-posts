@@ -2,6 +2,7 @@
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { setSelectedPost } from '../features/selectedPost';
+import { clearComments, loadCommentsByPost } from '../features/commentsSlice';
 
 export const PostsList = () => {
   const dispatch = useAppDispatch();
@@ -34,11 +35,15 @@ export const PostsList = () => {
                     'is-light': post.id !== selectedPost?.id,
                   })}
                   onClick={() => {
-                    dispatch(
-                      setSelectedPost(
-                        post.id === selectedPost?.id ? null : post,
-                      ),
-                    );
+                    if (post.id === selectedPost?.id) {
+                      dispatch(setSelectedPost(null));
+
+                      return;
+                    }
+
+                    dispatch(clearComments());
+                    dispatch(setSelectedPost(post));
+                    dispatch(loadCommentsByPost(post.id));
                   }}
                 >
                   {post.id === selectedPost?.id ? 'Close' : 'Open'}

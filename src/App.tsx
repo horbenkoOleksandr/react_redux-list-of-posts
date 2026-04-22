@@ -11,9 +11,7 @@ import { UserSelector } from './components/UserSelector';
 import { Loader } from './components/Loader';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { loadUsers } from './features/users';
-import { clearPosts, loadPostsByUser } from './features/posts';
-import { clearSelectedPost } from './features/selectedPost';
-import { clearComments } from './features/commentsSlice';
+// import { loadPostsByUser } from './features/posts';
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,16 +25,13 @@ export const App: React.FC = () => {
     dispatch(loadUsers());
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(clearSelectedPost());
-    dispatch(clearComments());
+  // useEffect(() => {
+  //   if (!author) {
+  //     return;
+  //   }
 
-    if (author) {
-      dispatch(loadPostsByUser(author.id));
-    } else {
-      dispatch(clearPosts());
-    }
-  }, [author, dispatch]);
+  //   dispatch(loadPostsByUser(author.id));
+  // }, [author, dispatch]);
 
   return (
     <main className="section">
